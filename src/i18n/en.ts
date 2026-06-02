@@ -5,7 +5,7 @@ export const en: LocaleMessages = {
   language: { label: 'Language' },
   nav: { home: 'Home', today: 'Today', stats: 'Stats', how: 'How' },
   hero: {
-    eyebrow: 'Daily puzzle · local-only MVP',
+    eyebrow: 'Daily puzzle · local-only play',
     title: 'Daily Loop Puzzle',
     subtitle: 'Pick connected number tiles to hit today’s target. One daily puzzle, 6 moves, local-only stats.',
   },

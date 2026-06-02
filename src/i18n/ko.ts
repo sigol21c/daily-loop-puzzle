@@ -5,7 +5,7 @@ export const ko: LocaleMessages = {
   language: { label: '언어' },
   nav: { home: '홈', today: '오늘', stats: '기록', how: '방법' },
   hero: {
-    eyebrow: '내부 MVP · 로컬 저장만 사용',
+    eyebrow: '매일 한 판 · 로컬 저장만 사용',
     title: 'Daily Loop Puzzle',
     subtitle: '연결된 숫자 타일을 골라 오늘의 Target을 맞추세요. 하루 1판, 6 moves, 로컬 기록만 사용합니다.',
   },
