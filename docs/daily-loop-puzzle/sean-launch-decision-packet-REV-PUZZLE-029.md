@@ -5,7 +5,9 @@
 작성자: knowledgecurator
 프로젝트 경로: `/Users/mac_agent/Documents/04_Projects/daily-loop-puzzle`
 Revenue OS hub: `/Users/mac_agent/Documents/01_Knowledge/sean-s_wiki/10_Wiki/🛠️ Projects/revenue_os_v1.md`
-상태: Sean 의사결정용 내부/local-only consolidation. 외부 배포, 공개 URL 공유, 고객/커뮤니티 contact, 계정 변경, 결제/광고/analytics, 개인정보 수집은 하지 않았다.
+상태: Sean 의사결정용 consolidation. 2026-06-02 Sean이 “결제 mock도 붙이지 말고 배포해. 반응을 한번 보자”라고 승인했고, GitHub Pages 공개 배포만 실행했다. 결제/결제 mock/광고/analytics/login/account/개인정보 수집/고객·커뮤니티 게시·contact는 추가하지 않았다.
+
+Public reaction-test URL: https://sigol21c.github.io/daily-loop-puzzle/
 
 ## 0. Sean을 위한 한 페이지 현재 상태
 
@@ -13,7 +15,8 @@ Revenue OS hub: `/Users/mac_agent/Documents/01_Knowledge/sean-s_wiki/10_Wiki/�
 
 - 내부 로컬 release candidate: GO.
 - Sean이 승인한 범위의 로컬/실기기 QA: 조건부 GO. 단, LAN 노출, tunnel, 외부 공유, 계정 변경 없이 진행할 수 있는 방식이어야 한다.
-- 외부 public launch / deploy / community posting / customer contact / analytics / payment / account work: NO-GO. Sean의 명시 승인 전에는 계속 금지다.
+- 외부 public deploy: GO — Sean 승인에 따라 GitHub Pages로 reaction-test 배포 완료.
+- community posting / customer contact / analytics / ads / payment / payment mock / account work: NO-GO. Sean의 별도 명시 승인 전에는 계속 금지다.
 
 ### 왜 로컬 RC는 GO인가
 

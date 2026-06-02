@@ -1,8 +1,10 @@
 # Daily Loop Puzzle
 
-Daily Loop Puzzle is a local-only React/Vite MVP for a small daily number puzzle. Each UTC day generates one deterministic 4x4 board and target; the player selects horizontally/vertically connected number tiles to match the target within 6 moves.
+Daily Loop Puzzle is a React/Vite MVP for a small daily number puzzle. Each UTC day generates one deterministic 4x4 board and target; the player selects horizontally/vertically connected number tiles to match the target within 6 moves.
 
-This repository is currently for internal local validation only. Do not publish, deploy, contact users or communities, add analytics/ads/payments, collect personal data, or change external accounts without Sean's explicit approval for that scope.
+Live public URL: https://sigol21c.github.io/daily-loop-puzzle/
+
+Sean approved a public GitHub Pages deployment on 2026-06-02 to observe reactions. Do not add analytics, ads, payments, payment mocks, login/accounts, personal-data collection, or community/customer posting without Sean's explicit approval for that additional scope.
 
 ## Current product boundary
 
@@ -15,7 +17,7 @@ This repository is currently for internal local validation only. Do not publish,
 
 ## Known launch limitations
 
-- Public launch remains NO-GO until Sean approves deployment/channel/contact/data scope.
+- Public GitHub Pages deploy is GO for reaction testing only; channel posting/contact/data collection remains approval-gated.
 - Real iOS Safari, Android Chrome, Desktop Chrome/Safari/Firefox device checks are still required before external launch.
 - Unit tests cover Web Share/clipboard/manual-copy branches with mocked browser APIs; they do not prove OS-level trusted-gesture behavior on real devices.
 - Copy should avoid claims like "works everywhere" or implying a full graph-loop mechanic; v1 is connected-tile target matching.
