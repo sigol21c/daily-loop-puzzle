@@ -76,10 +76,10 @@ Sean 리뷰용 내부 구현 범위:
 Local-only launch-readiness scope added without changing the app runtime boundary:
 
 - `index.html` now has a production title, description, viewport, `theme-color`, light `color-scheme`, manifest link, local SVG favicon, local SVG apple-touch icon link, and iOS standalone metadata (`apple-mobile-web-app-capable`, title, status bar style).
-- `public/manifest.webmanifest` defines `Daily Loop Puzzle` / `Daily Loop` with local-only `/` start/scope, `standalone` display, portrait orientation, local colors, and local SVG icon references only.
+- `public/manifest.webmanifest` defines `Daily Loop Puzzle` / `Daily Loop` with project-path-safe relative `.` start/scope, `standalone` display, portrait orientation, local colors, and local SVG icon references only.
 - `public/pwa-icon.svg` is a local square vector placeholder suitable for current internal browser/PWA metadata validation. Before public launch, replace or supplement it with reviewed maskable/raster icon exports if required by target stores/platforms.
 - No service worker, offline caching, analytics, external URL, payment, ad, login, backend, or remote asset was added.
-- `scripts/check-pwa-metadata.mjs` plus `npm run smoke:metadata` validates that the built `dist/index.html` includes required PWA/browser metadata, that `dist/manifest.webmanifest` is valid and local-only, and that built `src`/`href` references do not intentionally point at external network origins.
+- `scripts/check-pwa-metadata.mjs` plus `npm run smoke:metadata` validates that the built `dist/index.html` includes required PWA/browser metadata, that `dist/manifest.webmanifest` is valid and local-only, that built `src`/`href` references do not intentionally point at external network origins, and that built document/manifest/icon references resolve within the GitHub Pages project path `/daily-loop-puzzle/`.
 
 Current local verification command set for this metadata layer:
 

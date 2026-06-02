@@ -6,6 +6,7 @@ const root = process.cwd();
 const distDir = join(root, 'dist');
 const indexPath = join(distDir, 'index.html');
 const manifestPath = join(distDir, 'manifest.webmanifest');
+const publicBaseUrl = new URL('https://sigol21c.github.io/daily-loop-puzzle/');
 
 const failures = [];
 
@@ -27,6 +28,26 @@ function requireMatch(content, pattern, label) {
   }
 }
 
+function requireSameProjectPathUrl(reference, baseUrl, label) {
+  if (typeof reference !== 'string' || reference.trim().length === 0) {
+    fail(`${label} is missing`);
+    return;
+  }
+
+  if (/^(?:https?:)?\/\//i.test(reference)) {
+    fail(`${label} must be same-origin relative, received ${reference}`);
+    return;
+  }
+
+  const resolved = new URL(reference, baseUrl);
+  if (resolved.origin !== baseUrl.origin) {
+    fail(`${label} resolves outside ${baseUrl.origin}: ${resolved.href}`);
+  }
+  if (!resolved.pathname.startsWith(publicBaseUrl.pathname)) {
+    fail(`${label} escapes GitHub Pages project path ${publicBaseUrl.pathname}: ${resolved.href}`);
+  }
+}
+
 const indexHtml = requireFile(indexPath, 'built index.html');
 
 if (indexHtml) {
@@ -36,14 +57,17 @@ if (indexHtml) {
   requireMatch(indexHtml, /<meta\s+name="theme-color"\s+content="#[0-9a-f]{6}"\s*\/>/i, 'theme-color meta');
   requireMatch(indexHtml, /<meta\s+name="apple-mobile-web-app-capable"\s+content="yes"\s*\/>/i, 'apple mobile web app capable meta');
   requireMatch(indexHtml, /<meta\s+name="apple-mobile-web-app-title"\s+content="Daily Loop"\s*\/>/i, 'apple mobile web app title meta');
-  requireMatch(indexHtml, /<link\s+rel="manifest"\s+href="\/manifest\.webmanifest"\s*\/>/i, 'manifest link');
-  requireMatch(indexHtml, /<link\s+rel="apple-touch-icon"\s+href="\/pwa-icon\.svg"\s*\/>/i, 'local apple touch icon link');
+  requireMatch(indexHtml, /<link\s+rel="manifest"\s+href="\.\/manifest\.webmanifest"\s*\/>/i, 'project-path-safe manifest link');
+  requireMatch(indexHtml, /<link\s+rel="apple-touch-icon"\s+href="\.\/pwa-icon\.svg"\s*\/>/i, 'project-path-safe apple touch icon link');
 
-  const externalRefs = [...indexHtml.matchAll(/(?:src|href)="([^"]+)"/gi)]
-    .map((match) => match[1])
-    .filter((value) => /^(?:https?:)?\/\//i.test(value));
+  const resourceRefs = [...indexHtml.matchAll(/(?:src|href)="([^"]+)"/gi)]
+    .map((match) => match[1]);
+  const externalRefs = resourceRefs.filter((value) => /^(?:https?:)?\/\//i.test(value));
   if (externalRefs.length > 0) {
     fail(`built index.html has external src/href references: ${externalRefs.join(', ')}`);
+  }
+  for (const reference of resourceRefs) {
+    requireSameProjectPathUrl(reference, publicBaseUrl, `built index.html reference ${reference}`);
   }
 }
 
@@ -60,8 +84,8 @@ if (manifestRaw) {
     const expected = {
       name: 'Daily Loop Puzzle',
       short_name: 'Daily Loop',
-      start_url: '/',
-      scope: '/',
+      start_url: '.',
+      scope: '.',
       display: 'standalone',
       theme_color: '#f7f2e8',
       background_color: '#f7f2e8',
@@ -80,13 +104,18 @@ if (manifestRaw) {
     if (!Array.isArray(manifest.icons) || manifest.icons.length === 0) {
       fail('manifest icons missing');
     } else {
+      const manifestUrl = new URL('manifest.webmanifest', publicBaseUrl);
+      requireSameProjectPathUrl(manifest.start_url, manifestUrl, 'manifest start_url');
+      requireSameProjectPathUrl(manifest.scope, manifestUrl, 'manifest scope');
+
       for (const icon of manifest.icons) {
         if (!icon.src || /^(?:https?:)?\/\//i.test(icon.src)) {
           fail(`manifest icon has non-local src: ${icon.src}`);
         }
+        requireSameProjectPathUrl(icon.src, manifestUrl, `manifest icon ${icon.src}`);
       }
-      if (!manifest.icons.some((icon) => icon.src === '/pwa-icon.svg' && icon.type === 'image/svg+xml')) {
-        fail('manifest lacks local /pwa-icon.svg SVG icon');
+      if (!manifest.icons.some((icon) => icon.src === 'pwa-icon.svg' && icon.type === 'image/svg+xml')) {
+        fail('manifest lacks project-path-safe pwa-icon.svg SVG icon');
       }
     }
   }
